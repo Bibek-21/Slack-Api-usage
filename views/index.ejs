@@ -9,7 +9,7 @@
 
     <div class="container">
 
-        <form action="/form-submit" method="POST">
+        <form action="/postmessage" method="POST">
 
             <h2 style="margin-top: 100px;">Slack notifications</h2>
 
@@ -22,9 +22,22 @@
                     <label for="exampleEmailInput">Your email</label>
                     <input class="u-full-width" type="email" name="email" placeholder="test@mailbox.com" required>
 
+                    <label for="exampleMessageInput">Your message</label>
+                    <input class="u-full-width" type="message" name="message" placeholder="type here" required>
+
                     <button class="button-primary" type="submit">Submit</button>
 
+                    
+                    <%if (status==null) { %>
+                        <p></p>
+                       <% } else if(status==true){ %>
+                        <p> Successfully sent message!!! </p>
+                       <%} else{%>
+                        <p> cannot send message!!! </p>
+                        <% }%>
                 </div>
+
+                        
             </div>
 
         </form>

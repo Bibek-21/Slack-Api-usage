@@ -6,21 +6,42 @@ const express= require('express')
 const  app  = express()
 const port = 3000;
 app.set('view engine','ejs');
-app.set('view','view')
+app.set('views','views')
 app.use(express.urlencoded({extended:false}));
 app.use(express.json())
 
+app.get('/',(req,res)=>{
+    res.render('index.ejs',{
+        status:null
+    })
+})
+
 app.post('/postmessage',(req,res)=>{
-console.log(req.body.message);
-    axios.post('https://hooks.slack.com/services/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',{text:`${req.body.message}`})
+    axios.post('https://hooks.slack.com/services/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',{
+    text:`
+    Name: ${req.body.name}
+    Email: ${req.body.email}
+    Message: ${req.body.message}
+    `
+})
 
 .then(response=>{
     const data= response.data;
-    console.log(data);
-res.status(200).send("Successfuly posted")    
+    if(data){
+        
+        res.render('index.ejs',{
+            status:true
+        })
+    }
+    else{
+        resMessage=false
+        res.render('index.ejs',"notok")
+    }
+// res.status(200).send("Successfuly posted")    
     })
     .catch(err=>{
         console.log(err);
+
         res.status(500).send("error request")
     })
 })
